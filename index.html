@@ -15,6 +15,8 @@
         <script src="js/materialize.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
         <script src="js/app.js"></script>
+        <script src="js/issues.js"></script>
+        <script src="js/users.js"></script>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
@@ -29,6 +31,11 @@
 
             <!-- Projects -->
             <div class="col s2 leftbar">
+                <div class="statebox">
+                    <p class="icon-header"><i class="material-icons left accent-text">cloud_off</i> <span id="state-header">Connecting...</span></p>
+                    <p class="ih-text"></p>
+                </div>
+
                 <div class="accountbox">
                     <p class="icon-header"><i class="material-icons left accent-text">account_box</i> Account</p>
                     <p class="ih-text">Not Logged In</p>
@@ -46,7 +53,13 @@
 
             <!-- Bug view -->
             <div class="col s6 rightbar">
-
+                <p class="icon-header"><i class="material-icons left accent-text">bug_report</i> <span id="issue-title">Title</span> <span class="label" id="issue-state"></span></p>
+                <div class="issue">
+                    <p class="i-desc">Issue opened by <b id="issue-author"></b> at <b id="issue-time"></b>.</p>
+                    <blockquote id="issue-description">
+                        
+                    </blockquote>
+                </div>
             </div>
 
         </div>

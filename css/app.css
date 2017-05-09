@@ -55,3 +55,37 @@ body {
 .projectbox > .we {
     width: 100%;
 }
+
+/* issue */
+.issue {
+    padding: 15px;
+    color: white;
+    transition: all 1s;
+}
+
+.issue:hover {
+    transition: all 1s;
+    background: #424242;
+}
+
+.issue > .i-header {
+    font-size: 20px;
+}
+
+.issue > p {
+    margin: 0;
+}
+
+.i-icon, .issue > .i-info {
+    margin-top: 5px;
+    color: #aaa;
+}
+
+.issue > .row, .issue > .row > .col {
+    margin: 0;
+    padding: 0;
+}
+
+.row {
+    margin: 0;
+}

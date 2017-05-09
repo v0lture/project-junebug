@@ -11,12 +11,8 @@ firebase.initializeApp(config);
 // handle connection state
 var stateRef = firebase.database().ref(".info/connected");
 stateRef.on("value", function(snap) {
-  if (snap.val() === true) {
     $(".statebox").slideUp();
-    $("#state-header").text("Connected");
-    $(".statebox > .ih-text").text("");
-    Materialize.toast("You have gone online.", 5000);
-  } else {
+  if (snap.val() !== true) {
     $(".statebox").slideDown();
     $("#state-header").text("Disconnected");
     $(".statebox > .ih-text").text("Make sure you are connected to the internet. We will reconnect automatically.");

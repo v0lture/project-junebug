@@ -35,6 +35,7 @@ bugsRef.orderByKey().limitToLast(20).on("child_added", (snapshot) => {
 
     console.log(snapshot.val());
 
-    $(".centerbar").append('<div class="issue"><p class="i-header">'+snapshot.child('title').val()+'</p><p class="i-desc truncate">'+snapshot.child('text').val()+'</p><div class="row"><div class="col s12 m6 l6"><p class="i-icon"><i class="material-icons left accent-text">announcement</i> '+states[snapshot.child('state').val()]+'</p><p class="i-icon"><i class="material-icons left accent-text">content_paste</i> Project Junebug</p></div><div class="col s12 m6 l6"><p class="i-icon truncate"><i class="material-icons left accent-text">account_box</i> '+snapshot.child('uid').val()+'</p><p class="i-icon"><i class="material-icons left accent-text">history</i> 23:24 - 5/8/17</p></div></div></div>');
+    var pre = $(".centerbar").html();
+    $(".centerbar").html('<div class="issue"><p class="i-header">'+snapshot.child('title').val()+'</p><p class="i-desc truncate">'+snapshot.child('text').val()+'</p><div class="row"><div class="col s12 m6 l6"><p class="i-icon"><i class="material-icons left accent-text">announcement</i> '+states[snapshot.child('state').val()]+'</p><p class="i-icon"><i class="material-icons left accent-text">content_paste</i> Project Junebug</p></div><div class="col s12 m6 l6"><p class="i-icon truncate"><i class="material-icons left accent-text">account_box</i> '+snapshot.child('uid').val()+'</p><p class="i-icon"><i class="material-icons left accent-text">history</i> 23:24 - 5/8/17</p></div></div></div>' + pre);
 
 });

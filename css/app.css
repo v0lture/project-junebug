@@ -3,11 +3,19 @@ body {
 }
 
 .accent {
-    background: #673ab7
+    background: #673ab7 !important;
 }
 
 .accent-text {
     color: #673ab7;
+}
+
+.accent-light {
+    background: #7e57c2;
+}
+
+.accent-text-light {
+    color: #7e57c2;
 }
 
 .leftbar {
@@ -98,7 +106,7 @@ body {
 
 .label {
     border-radius: 7.5px;
-    background: #673ab7;
+    background: #7e57c2;
     color: white;
     padding: 5px;
     text-transform: uppercase;
@@ -107,4 +115,88 @@ body {
 
 blockquote {
     border-left-color: #673ab7;
+}
+
+.issue.issue-white {
+    background: #F5F5F5;
+    color: black;
+}
+
+.issue.issue-lwhite {
+    background: #E0E0E0;
+    color: black;
+}
+
+.subheader {
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-bottom: 5px;
+    padding-left: 40px;
+}
+
+.login-box {
+    background: #E0E0E0;
+    padding: 15px;
+    margin: 15px;
+    color: black;
+    position: fixed;
+    z-index: 10;
+    margin-left: -40px;
+}
+
+.login-box > .arrow {
+    height: 24px;
+    width: 24px;
+    background: #E0E0E0;
+    transform: rotate(45deg);
+    margin-left: -27px;
+}
+
+.login-box > .content {
+    margin-top: -24px;
+}
+
+.login-box > .content > p {
+    margin: 0;
+}
+
+.login-box > .loading {
+    display: none;
+    margin-top: -24px;
+    width: 128px;
+}
+
+.login-box > .loading > p {
+    margin-top: 0;
+}
+
+.login-box > .content > .login-err-wrap {
+    display: none;
+}
+
+/* forms */
+.input-field label {
+    color: #000;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: #673ab7;
+}
+
+.input-field input[type=password]:focus + label {
+    color: #673ab7;
+}
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #673ab7;
+    box-shadow: 0 1px 0 0 #673ab7;
+}
+
+.input-field input[type=password]:focus {
+    border-bottom: 1px solid #673ab7;
+    box-shadow: 0 1px 0 0 #673ab7;
+}
+
+.input-field .prefix.active {
+    color: #673ab7;
 }

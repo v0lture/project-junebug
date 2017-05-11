@@ -119,6 +119,8 @@ firebase.auth().onAuthStateChanged((user) => {
         $("#profile-email").val(user.email);
         $("#profile-display").val(user.displayName);
 
+        $("#new-issue-user").html("Submitting this issue as <b>"+user.displayName+"</b> <small>"+user.email+"</small>. <a href='#' class='accent-text' onclick='userDialog(\"user\")'>Manage your profile</a>");
+
         if(user.emailVerified){
             $("#profile-email-verified").html("<i class='material-icons left accent-text'>done</i> Email is verified.");
         } else {
@@ -126,5 +128,6 @@ firebase.auth().onAuthStateChanged((user) => {
         }
     } else {
         $("#auth-state").attr("onclick", "userDialog('login')").text("Not logged in.");
+        $("#new-issue-user").html("Not logged in. <a href='#' onclick='userDialog(\"login\")' class='accent-text'>Log in</a>");
     }
 });

@@ -200,3 +200,12 @@ blockquote {
 .input-field .prefix.active {
     color: #673ab7;
 }
+
+label {
+    color: black;
+}
+
+[type="radio"]:checked + label::after, .with-gap[type="radio"]:checked + label::before, .with-gap[type="radio"]:checked + label::after {
+    border-color: #673ab7;
+    background: #673ab7;
+}

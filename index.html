@@ -12,6 +12,7 @@
 
         <!-- JS -->
         <script src="js/jquery.js"></script>
+        <script src="js/moment.js"></script>
         <script src="js/materialize.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
         <script src="js/app.js"></script>
@@ -202,11 +203,17 @@
                 <div class="issues-array">
 
                 </div>
+
+                <div class="fixed-action-btn">
+                    <a class="btn-floating btn-large accent waves-effect waves-light" onclick="issueDialog('new')">
+                        <i class="large material-icons">add</i>
+                    </a>
+                </div>
             </div>
 
             <!-- Bug view -->
             <div class="col s6 rightbar">
-                <div id="issueview">
+                <div class="issue-dialog" id="details-issue-view">
                     <p class="icon-header"><i class="material-icons left accent-text-light">bug_report</i> <span id="issue-title">Title</span> <span class="label" id="issue-state"></span></p>
                     
                     <div class="issue issue-white">
@@ -231,6 +238,70 @@
                             </div>
 
                         </div>
+                    </div>
+                </div>
+
+                <div class="issue-dialog" id="new-issue-view">
+                    <p class="icon-header"><i class="material-icons left accent-text-light">bug_report</i> New issue</p>
+                    
+                    <div class="issue issue-white">
+                        <form>
+
+                            <div class="input-field">
+                                <input id="new-issue-title" type="text"></input>
+                                <label for="new-issue-title">Title</label>
+                            </div>
+
+                            <div class="input-field">
+                                <input id="new-issue-desc" type="text"></input>
+                                <label for="new-issue-desc">Description</label>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col s6" id="new-issue-projects">
+                                    <p>Affected Project:</p>
+                                </div>
+
+                                <div class="col s6">
+                                    <p>Issue Severity:</p>
+                                    <p>
+                                        <input class="with-gap" name="new-issue-severity" type="radio" id="new-issue-severity-req" value="1" />
+                                        <label for="new-issue-severity-req">Request</label>
+                                    </p>
+                                    <p>
+                                        <input class="with-gap" name="new-issue-severity" type="radio" id="new-issue-severity-minor" value="2" />
+                                        <label for="new-issue-severity-minor">Minor</label>
+                                    </p>
+                                    <p>
+                                        <input class="with-gap" name="new-issue-severity" type="radio" id="new-issue-severity-low" value="3" />
+                                        <label for="new-issue-severity-low">Low</label>
+                                    </p>
+                                    <p>
+                                        <input class="with-gap" name="new-issue-severity" type="radio" id="new-issue-severity-normal" value="4" />
+                                        <label for="new-issue-severity-normal">Normal</label>
+                                    </p>
+                                    <p>
+                                        <input class="with-gap" name="new-issue-severity" type="radio" id="new-issue-severity-major" value="5" />
+                                        <label for="new-issue-severity-major">Major</label>
+                                    </p>
+                                    <p>
+                                        <input class="with-gap" name="new-issue-severity" type="radio" id="new-issue-severity-critical" value="6" />
+                                        <label for="new-issue-severity-critical">Critical</label>
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                    
+                    <div class="issue issue-lwhite">
+                        <p id="new-issue-user">...</p><br />
+                        <p id="new-issue-err-wrap" style="display: none;"><i class="material-icons left accent-text-light">warning</i> <span id="new-issue-err"></span></p><br />
+
+                        <a onclick="newIssue()" class="btn waves-effect waves-light accent white-text">Submit</a>
+                        <a onclick="issueDialogs()" class="btn-flat waves-effect waves-light accent-text">Cancel</a>
                     </div>
                 </div>
             </div>

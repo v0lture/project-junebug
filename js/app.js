@@ -59,9 +59,19 @@ projectsRef.on("child_added", function(snapshot) {
 });
 
 var bugsRef = firebase.database().ref("/bugs/");
+
+// delete any deleted bugs
+bugsRef.orderByKey().on("child_removed"), (snapshot) => {
+    issues[snapshot.key] = null;
+    
+    $("#issue-"+snapshot.key).delete();
+};
+
 // read last 20 bugs
 function getIssues(paginate = true){
     $(".issues-array").html("");
+
+    keyi = ((page-1) * 20)+1;
 
     if(paginate){
         startAt = getKeyFor(page);
@@ -70,7 +80,7 @@ function getIssues(paginate = true){
         startAt = "";
     }
 
-    bugsRef.orderByKey().limitToLast(20).startAt(startAt).on("child_added", (snapshot) => {
+    bugsRef.orderByKey().limitToFirst(20).startAt(startAt).on("child_added", (snapshot) => {
         issues[snapshot.key] = snapshot.val();
 
         issuekeys[keyi] = snapshot.key;
@@ -90,7 +100,8 @@ function pagination(loc){
         // add page
         page++;
         $("#pagination-minus").show();
-    } else if(loc == "-") {
+        $("#pagination-minus-t").show();
+    } else if(loc === "-") {
         if(page < 2){
             page = 1;
         } else {
@@ -101,11 +112,22 @@ function pagination(loc){
     // safety overwrite conflict
     if(getKeyFor(page) === undefined && page !== 1){
         page--;
+        $("#pagination-plus").hide();
+        $("#pagination-plus-t").hide();
+    }
+
+    if(getKeyFor(page + 1) === undefined){
+        $("#pagination-plus").hide();
+        $("#pagination-plus-t").hide();
     }
 
     $("#pagination-pg").html("<a>"+page+"</a>");
-    if(page == 1){
+    $("#pagination-pg-t").html("<a>"+page+"</a>");
+    if(page === 1){
         $("#pagination-minus").hide();
+        $("#pagination-minus-t").hide();
+        $("#pagination-plus").show();
+        $("#pagination-plus-t").show();
         getIssues(false);
     } else {
         getIssues();

@@ -16,7 +16,7 @@ function openIssue(id){
 function newIssue(){
     var user = firebase.auth().currentUser;
     issueDialog('new');
-    issueUI();
+    issueUI(false, false);
 
     var severity = $("input:radio[name='new-issue-severity']:checked").val();
     var project = $("input:radio[name='new-issue-project']:checked").val();
@@ -66,6 +66,7 @@ function issueDialog(view = "") {
     $(".issue-dialog").hide();
     $(".new-issue-err").hide();
     $(".new-issue-err-wrap").hide();
+    issueUI(false, false);
 
     if(view === "details" || view === "new"){
         $("#"+view+"-issue-view").show();
@@ -89,4 +90,5 @@ function issueUI(loading = false, error = false, e){
 
 $(document).ready(() => {
     issueDialog();
+    pagination('-');
 })

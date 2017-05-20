@@ -61,7 +61,7 @@ projectsRef.on("child_added", function(snapshot) {
 var bugsRef = firebase.database().ref("/bugs/");
 
 // delete any deleted bugs
-bugsRef.orderByKey().on("child_removed"), (snapshot) => {
+bugsRef.orderByKey().on("child_removed" (snapshot)) => {
     issues[snapshot.key] = null;
     
     $("#issue-"+snapshot.key).delete();

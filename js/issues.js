@@ -10,11 +10,13 @@ function openIssue(id){
     $("#issue-project").text(projects[issues[id].project].name);
     $("#issue-pro-status").text(states[issues[id].state]);
     $("#issue-pro-platform").text(projects[issues[id].project].platform);
+    $("#issue-pro-severity").text(severity[issues[id].severity]);
 }
 
 function newIssue(){
     var user = firebase.auth().currentUser;
     issueDialog('new');
+    issueUI();
 
     var severity = $("input:radio[name='new-issue-severity']:checked").val();
     var project = $("input:radio[name='new-issue-project']:checked").val();
@@ -25,7 +27,7 @@ function newIssue(){
         // submit issue
 
         if(severity === undefined || project === undefined){
-            issueUI(false, true, {"message": "Please select the effected project and issue severity."});
+            issueUI(false, true, {"message": "Please select the affected project and issue severity."});
         } else if(title === "" || desc === ""){
             issueUI(false, true, {"message": "Please specify the title and description of your issue."});
         } else {
@@ -49,7 +51,7 @@ function newIssue(){
             firebase.database().ref('bugs/' + key).set(issue).then(() => {
                 openIssue(key);
             }, (e) => {
-
+                issueUI(false, true, e);
             });
 
         }
@@ -73,10 +75,15 @@ function issueDialog(view = "") {
 function issueUI(loading = false, error = false, e){
     $("#new-issue-err").hide();
     $("#new-issue-err-wrap").hide();
+    $("#new-issue-loading").hide();
 
     if(error) {
         $("#new-issue-err").show().text(e.message);
         $("#new-issue-err-wrap").show();
+    }
+
+    if(loading) {
+        $("#new-issue-loading").show();
     }
 }
 

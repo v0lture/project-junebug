@@ -29,8 +29,23 @@ var states = {
     6: "Cannot reproduce"
 };
 
+var severity = {
+    1: "Request",
+    2: "Minor",
+    3: "Low",
+    4: "Normal",
+    5: "Major",
+    6: "Critical"
+}
+
+var page = 1;
+var keyi = 1;
+
+var startAt;
+
 var projects = {};
 var issues = {};
+var issuekeys = {};
 
 var projectsRef = firebase.database().ref("/projects/");
 projectsRef.on("child_added", function(snapshot) {
@@ -45,9 +60,64 @@ projectsRef.on("child_added", function(snapshot) {
 
 var bugsRef = firebase.database().ref("/bugs/");
 // read last 20 bugs
-bugsRef.orderByKey().limitToLast(20).on("child_added", (snapshot) => {
-    issues[snapshot.key] = snapshot.val();
+function getIssues(paginate = true){
+    $(".issues-array").html("");
 
-    $(".issues-array").append('<div onclick="openIssue(\''+snapshot.key+'\')" class="issue"><p class="i-header">'+snapshot.child('title').val()+'</p><p class="i-desc truncate">'+snapshot.child('text').val()+'</p><div class="row"><div class="col s12 m6 l6"><p class="i-icon"><i class="material-icons left accent-text">announcement</i> '+states[snapshot.child('state').val()]+'</p><p class="i-icon"><i class="material-icons left accent-text">content_paste</i> '+projects[snapshot.child("project").val()].name+'</p></div><div class="col s12 m6 l6"><p class="i-icon truncate"><i class="material-icons left accent-text">account_box</i> '+snapshot.child("display").val()+'</p><p class="i-icon"><i class="material-icons left accent-text">history</i> '+moment(snapshot.child("time").val()).fromNow()+'</p></div></div></div>');
+    if(paginate){
+        startAt = getKeyFor(page);
+        console.log(getKeyFor(page));
+    } else {
+        startAt = "";
+    }
 
-});
+    bugsRef.orderByKey().limitToLast(20).startAt(startAt).on("child_added", (snapshot) => {
+        issues[snapshot.key] = snapshot.val();
+
+        issuekeys[keyi] = snapshot.key;
+        keyi++;
+
+        $(".issues-array").append('<div id="issue-'+snapshot.key+'" onclick="openIssue(\''+snapshot.key+'\')" class="issue"><p class="i-header">'+snapshot.child('title').val()+'</p><p class="i-desc truncate">'+snapshot.child('text').val()+'</p><div class="row"><div class="col s12 m6 l6"><p class="i-icon"><i class="material-icons left accent-text">announcement</i> '+states[snapshot.child('state').val()]+'</p><p class="i-icon"><i class="material-icons left accent-text">content_paste</i> '+projects[snapshot.child("project").val()].name+'</p></div><div class="col s12 m6 l6"><p class="i-icon truncate"><i class="material-icons left accent-text">account_box</i> '+snapshot.child("display").val()+'</p><p class="i-icon"><i class="material-icons left accent-text">history</i> '+moment(snapshot.child("time").val()).fromNow()+'</p></div></div></div>');
+
+    });
+}
+
+// 
+
+// pagination UI
+function pagination(loc){
+
+    if(loc === "+") {
+        // add page
+        page++;
+        $("#pagination-minus").show();
+    } else if(loc == "-") {
+        if(page < 2){
+            page = 1;
+        } else {
+            page--;
+        }
+    }
+
+    // safety overwrite conflict
+    if(getKeyFor(page) === undefined && page !== 1){
+        page--;
+    }
+
+    $("#pagination-pg").html("<a>"+page+"</a>");
+    if(page == 1){
+        $("#pagination-minus").hide();
+        getIssues(false);
+    } else {
+        getIssues();
+    }
+    
+}
+
+// get last key for previous page
+function getKeyFor(page){
+    if(issuekeys.length <= (page-1)*20) {
+        return issuekeys[issuekeys.length-1];
+    } else {
+        return issuekeys[(page-1)*20];
+    }
+}

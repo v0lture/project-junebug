@@ -200,8 +200,32 @@
 
                 </div>
 
+                <div class="issues-pagination">
+                    <ul class="pagination">
+                        <li class="waves-effect"><a href="#!"><i class="material-icons white-text">filter_list</i></a></li>
+
+                        <li id="pagination-minus" class="waves-effect" onclick="pagination('-')"><a href="#!"><i class="material-icons white-text">chevron_left</i></a></li>
+
+                        <li class="active" id="pagination-pg"><a>1</a></li>
+
+                        <li id="pagination-plus" onclick="pagination('+')" class="waves-effect"><a href="#!"><i class="material-icons white-text">chevron_right</i></a></li>
+                    </ul>
+                </div>
+
                 <div class="issues-array">
 
+                </div>
+
+                <div class="issues-pagination">
+                    <ul class="pagination">
+                        <li class="waves-effect"><a href="#!"><i class="material-icons white-text">filter_list</i></a></li>
+
+                        <li id="pagination-minus" class="waves-effect" onclick="pagination('-')"><a href="#!"><i class="material-icons white-text">chevron_left</i></a></li>
+
+                        <li class="active" id="pagination-pg"><a>1</a></li>
+
+                        <li id="pagination-plus" onclick="pagination('+')" class="waves-effect"><a href="#!"><i class="material-icons white-text">chevron_right</i></a></li>
+                    </ul>
                 </div>
 
                 <div class="fixed-action-btn">
@@ -234,6 +258,7 @@
                                 <p class="subheader">Issue Info</p>
                                 <p><i class="material-icons left accent-text-light">content_paste</i> Project: <b id="issue-project">[Project]</b></p>
                                 <p><i class="material-icons left accent-text-light">info</i> Status: <b id="issue-pro-status">[status]</b></p>
+                                <p><i class="material-icons left accent-text-light">report</i> Severity: <b id="issue-pro-severity">[severity]</b></p>
                                 <p><i class="material-icons left accent-text-light">web_asset</i> Platform: <b id="issue-pro-platform">[platform]</b></p>
                             </div>
 
@@ -245,6 +270,15 @@
                     <p class="icon-header"><i class="material-icons left accent-text-light">bug_report</i> New issue</p>
                     
                     <div class="issue issue-white">
+
+                        <div id="new-issue-loading">
+
+                            <div class="progress grey">
+                                <div class="indeterminate accent"></div>
+                            </div>
+
+                        </div>
+
                         <form>
 
                             <div class="input-field">

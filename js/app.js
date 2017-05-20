@@ -64,7 +64,7 @@ var bugsRef = firebase.database().ref("/bugs/");
 bugsRef.orderByKey().on("child_removed", (snapshot) => {
     issues[snapshot.key] = null;
     
-    $("#issue-"+snapshot.key).delete();
+    $("#issue-"+snapshot.key).remove();
 });
 
 // read last 20 bugs

@@ -1,4 +1,4 @@
-/*global firebase:true states:true severity:true issues:true userDialog Materialize */
+/*global firebase:true projects:true states:true severity:true issues:true userDialog Materialize pagination moment:true */
 /*eslint no-undef: "error"*/
 
 var config = {
@@ -39,7 +39,7 @@ var severity = {
     4: "Normal",
     5: "Major",
     6: "Critical"
-}
+};
 
 var page = 1;
 var keyi = 1;
@@ -85,7 +85,6 @@ function getIssues(paginate = true){
 
     if(paginate){
         startAt = getKeyFor(page);
-        console.log(getKeyFor(page));
     } else {
         startAt = "";
     }
@@ -112,27 +111,25 @@ function pagination(loc){
         $("#pagination-minus").show();
         $("#pagination-minus-t").show();
     } else if(loc === "-") {
+        page--;
+
         if(page < 2){
             page = 1;
-        } else {
-            page--;
         }
     }
 
     // safety overwrite conflict
-    if(getKeyFor(page) === undefined && page !== 1){
+    if(getKeyFor(page) === undefined && page > 1){
         page--;
         $("#pagination-plus").hide();
         $("#pagination-plus-t").hide();
     }
 
-    if(getKeyFor(page + 1) === undefined){
+    if(typeof getKeyFor(page + 1) === "undefined"){
         $("#pagination-plus").hide();
         $("#pagination-plus-t").hide();
     }
 
-    $("#pagination-pg").html("<a>"+page+"</a>");
-    $("#pagination-pg-t").html("<a>"+page+"</a>");
     if(page === 1){
         $("#pagination-minus").hide();
         $("#pagination-minus-t").hide();
@@ -142,5 +139,8 @@ function pagination(loc){
     } else {
         getIssues();
     }
+
+    $("#pagination-pg").html("<a>"+page+"</a>");
+    $("#pagination-pg-t").html("<a>"+page+"</a>");
     
 }

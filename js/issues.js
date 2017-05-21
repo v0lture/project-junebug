@@ -1,16 +1,7 @@
-/*global firebase:true states:true severity:true issues:true userDialog Materialize */
+/*global firebase:true projects:true states:true severity:true issues:true userDialog Materialize pagination moment:true */
 /*eslint no-undef: "error"*/
 
-function issueDialog(view = "") {
-    $(".issue-dialog").hide();
-    $(".new-issue-err").hide();
-    $(".new-issue-err-wrap").hide();
-    issueUI(false, false);
-
-    if(view === "details" || view === "new"){
-        $("#"+view+"-issue-view").show();
-    }
-}
+var issueid;
 
 function issueUI(loading = false, error = false, e){
     $("#new-issue-err").hide();
@@ -27,6 +18,17 @@ function issueUI(loading = false, error = false, e){
     }
 }
 
+function issueDialog(view = "") {
+    $(".issue-dialog").hide();
+    $(".new-issue-err").hide();
+    $(".new-issue-err-wrap").hide();
+    issueUI(false, false);
+
+    if(view === "details" || view === "new"){
+        $("#"+view+"-issue-view").show();
+    }
+}
+
 function openIssue(element){
     issueDialog("details");
 
@@ -39,7 +41,7 @@ function openIssue(element){
 
     // validate ID is a string and clean it
     if(typeof id === "string"){
-        var issueid = id;
+        issueid = id;
     } else {
         return;
     }
@@ -121,4 +123,4 @@ function newIssue(){
 $(document).ready(() => {
     issueDialog();
     pagination("-");
-})
+});

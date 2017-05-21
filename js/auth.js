@@ -1,4 +1,4 @@
-/*global firebase:true states:true severity:true issues:true userDialog Materialize */
+/*global firebase:true projects:true states:true severity:true issues:true userDialog Materialize pagination moment:true */
 /*eslint no-undef: "error"*/
 
 // user ui dialogs

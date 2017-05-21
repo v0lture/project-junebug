@@ -3,7 +3,7 @@ function openIssue(id){
 
     // validate ID is a string and clean it
     if(typeof id === "string"){
-        issueid = id.match('/([A-Za-z0-9\-]+)/g');
+        issueid = id.match("/([A-Za-z0-9\-]+)/g");
     } else {
         return;
     }
@@ -54,7 +54,7 @@ function issueUI(loading = false, error = false, e){
 
 function newIssue(){
     var user = firebase.auth().currentUser;
-    issueDialog('new');
+    issueDialog("new");
     issueUI(false, false);
 
     var severity = $("input:radio[name='new-issue-severity']:checked").val();
@@ -82,9 +82,9 @@ function newIssue(){
                 "time": firebase.database.ServerValue.TIMESTAMP
             };
 
-            var key = firebase.database().ref().child('bugs').push().key;
+            var key = firebase.database().ref().child("bugs").push().key;
 
-            firebase.database().ref('bugs/' + key).set(issue).then(() => {
+            firebase.database().ref("bugs/" + key).set(issue).then(() => {
                 openIssue(key);
             }, (e) => {
                 issueUI(false, true, e);
@@ -92,13 +92,13 @@ function newIssue(){
 
         }
     } else {
-        userDialog('login');
-        Materialize.toast('You must be logged in to submit an issue.', 5000);
+        userDialog("login");
+        Materialize.toast("You must be logged in to submit an issue.", 5000);
         issueUI(false, true, {"message": "You must be logged in to submit an issue."});
     }
 }
 
 $(document).ready(() => {
     issueDialog();
-    pagination('-');
+    pagination("-");
 })

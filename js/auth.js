@@ -1,12 +1,41 @@
+// user ui dialogs
+function flushUI(togglestate = false, toggleerror = false, e = false) {
+    $(".login-box > .content").show();
+    $(".login-box > .loading").hide();
+    $(".login-err-wrap").hide();
+
+    if(togglestate){
+        console.log("[auth.js]@(flushUI): Showing loaders");
+        $(".login-box > .loading").show();
+        $(".login-box > .content").hide();
+    } 
+
+    if(toggleerror) {
+        console.log("[auth.js]@(flushUI): Showing errors");
+        $(".login-err-wrap").show();
+        $("#reg-err").text(e.message);
+        $("#login-err").text(e.message);
+    }
+}
+
+function userDialog(view = ""){  
+    $(".login-box").hide();
+    $(".login-box > .loading").hide();
+    flushUI();
+
+    if(view === "login" || view === "register" || view === "user" || view === "forgotpass"){
+        $("#"+view+"-box").show();
+    }
+}
+
 function login(){
     var email = $("#login-email").val();
     var pass = $("#login-password").val();
     flushUI(true);
 
     firebase.auth().signInWithEmailAndPassword(email, pass).then(() => {
-        userDialog('user');
+        userDialog("user");
     }).catch((e) => {
-        console.log(e);
         flushUI(false, true, e);       
     });
 }
@@ -16,15 +45,14 @@ function register() {
     var pass = {1: $("#reg-password").val(), 2: $("#reg-conf-password").val()};
 
     if(pass[1] === pass[2]) {
-        flushUI(true)
+        flushUI(true);
 
         // register
         firebase.auth().createUserWithEmailAndPassword(email, pass[1]).then(() => {
-            userDialog('user');
+            userDialog("user");
             flushUI();
             verifyEmail();
         }).catch((e) => {
-            console.log(e);
             flushUI(false, true, e);
         });
     } else {
@@ -33,12 +61,12 @@ function register() {
 }
 
 function logOut(){
-    userDialog('login');
+    userDialog("login");
     flushUI(true);
     firebase.auth().signOut().then(function() {
         flushUI();
         userDialog();
-        Materialize.toast('Logged out', 1000);
+        Materialize.toast("Logged out", 1000);
     }).catch(function(error) {
         flushUI(false, true, error);
     });
@@ -69,28 +97,9 @@ function updateProfile(){
     });
 }
 
-function flushUI(togglestate = false, toggleerror = false, e = false) {
-    $(".login-box > .content").show();
-    $(".login-box > .loading").hide();
-    $(".login-err-wrap").hide();
-
-    if(togglestate){
-        console.log("[auth.js]@(flushUI): Showing loaders");
-        $(".login-box > .loading").show();
-        $(".login-box > .content").hide();
-    } 
-
-    if(toggleerror) {
-        console.log("[auth.js]@(flushUI): Showing errors");
-        $(".login-err-wrap").show();
-        $("#reg-err").text(e.message);
-        $("#login-err").text(e.message);
-    }
-}
-
 // email verification
 function verifyEmail(){
-    userDialog('user');
+    userDialog("user");
     flushUI(true);
 
     firebase.auth().currentUser.sendEmailVerification().then(() => {
@@ -101,16 +110,7 @@ function verifyEmail(){
     })
 }
 
-// user ui dialogs
-function userDialog(view = ""){  
-    $(".login-box").hide();
-    $(".login-box > .loading").hide();
-    flushUI();
 
-    if(view === "login" || view === "register" || view === "user" || view === "forgotpass"){
-        $("#"+view+"-box").show();
-    }
-}
 
 firebase.auth().onAuthStateChanged((user) => {
     if(user){

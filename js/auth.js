@@ -1,3 +1,6 @@
+/*global firebase:true states:true severity:true issues:true userDialog Materialize */
+/*eslint no-undef: "error"*/
+
 // user ui dialogs
 function flushUI(togglestate = false, toggleerror = false, e = false) {
     $(".login-box > .content").show();
@@ -5,13 +8,11 @@ function flushUI(togglestate = false, toggleerror = false, e = false) {
     $(".login-err-wrap").hide();
 
     if(togglestate){
-        console.log("[auth.js]@(flushUI): Showing loaders");
         $(".login-box > .loading").show();
         $(".login-box > .content").hide();
     } 
 
     if(toggleerror) {
-        console.log("[auth.js]@(flushUI): Showing errors");
         $(".login-err-wrap").show();
         $("#reg-err").text(e.message);
         $("#login-err").text(e.message);
@@ -26,6 +27,19 @@ function userDialog(view = ""){
     if(view === "login" || view === "register" || view === "user" || view === "forgotpass"){
         $("#"+view+"-box").show();
     }
+}
+
+// email verification
+function verifyEmail(){
+    userDialog("user");
+    flushUI(true);
+
+    firebase.auth().currentUser.sendEmailVerification().then(() => {
+        flushUI();
+        Materialize.toast("Verification email sent, check your inbox.", 5000);
+    }, (e) => {
+        flushUI(false, true, e);
+    });
 }
 
 function login(){
@@ -96,21 +110,6 @@ function updateProfile(){
         flushUI(false, true, e);
     });
 }
-
-// email verification
-function verifyEmail(){
-    userDialog("user");
-    flushUI(true);
-
-    firebase.auth().currentUser.sendEmailVerification().then(() => {
-        flushUI();
-        Materialize.toast("Verification email sent, check your inbox.", 5000);
-    }, (e) => {
-        flushUI(false, true, e);
-    })
-}
-
-
 
 firebase.auth().onAuthStateChanged((user) => {
     if(user){

@@ -1,3 +1,6 @@
+/*global firebase:true states:true severity:true issues:true userDialog Materialize */
+/*eslint no-undef: "error"*/
+
 var config = {
     apiKey: "AIzaSyA5C1EVGQxGtelc4rrins837kIXA-Ib7Sg",
     authDomain: "project-junebug.firebaseapp.com",
@@ -49,8 +52,6 @@ var issuekeys = {};
 
 var projectsRef = firebase.database().ref("/projects/");
 projectsRef.on("child_added", function(snapshot) {
-  console.log(snapshot.val());
-
   // handle submitting projects to wall
   $(".projectbox").append("<div id=\"proj-"+snapshot.key+"\" onclick=\"filterIssues("+snapshot.key+")\" class=\"waves-effect waves-light we\"><p class=\"ih-text\">"+snapshot.child("name").val()+"</p></div>");
   $("#new-issue-projects").append("<p><input class=\"with-gap\" value=\""+snapshot.key+"\" name=\"new-issue-project\" type=\"radio\" id=\"new-issue-project-"+snapshot.key+"\" /><label for=\"new-issue-project-"+snapshot.key+"\">"+snapshot.child("name").val()+"</label></p>");
@@ -95,7 +96,7 @@ function getIssues(paginate = true){
         issuekeys[keyi] = snapshot.key;
         keyi++;
 
-        $(".issues-array").append("<div id=\"issue-"+snapshot.key+"\" onclick='openIssue(\""+snapshot.key+"\")' class=\"issue\"><p class=\"i-header\">"+snapshot.child("title").val()+\"</p><p class=\"i-desc truncate\">"+snapshot.child("text").val()+"</p><div class=\"row\"><div class=\"col s12 m6 l6\"><p class=\"i-icon\"><i class=\"material-icons left accent-text\">announcement</i> "+states[snapshot.child("state").val()]+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">content_paste</i> "+projects[snapshot.child("project").val()].name+"</p></div><div class=\"col s12 m6 l6\"><p class=\"i-icon truncate\"><i class=\"material-icons left accent-text\">account_box</i> "+snapshot.child("display").val()+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">history</i> "+moment(snapshot.child("time").val()).fromNow()+"</p></div></div></div>");
+        $(".issues-array").append("<div id=\"issue-"+snapshot.key+"\" onclick='openIssue(this)' class=\"issue\"><p class=\"i-header\">"+snapshot.child("title").val()+"</p><p class=\"i-desc truncate\">"+snapshot.child("text").val()+"</p><div class=\"row\"><div class=\"col s12 m6 l6\"><p class=\"i-icon\"><i class=\"material-icons left accent-text\">announcement</i> "+states[snapshot.child("state").val()]+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">content_paste</i> "+projects[snapshot.child("project").val()].name+"</p></div><div class=\"col s12 m6 l6\"><p class=\"i-icon truncate\"><i class=\"material-icons left accent-text\">account_box</i> "+snapshot.child("display").val()+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">history</i> "+moment(snapshot.child("time").val()).fromNow()+"</p></div></div></div>");
 
     });
 }

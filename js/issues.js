@@ -1,30 +1,5 @@
-function openIssue(id){
-    issueDialog("details");
-
-    // validate ID is a string and clean it
-    if(typeof id === "string"){
-        issueid = id.match("/([A-Za-z0-9\-]+)/g");
-    } else {
-        return;
-    }
-
-    if(issues[issueid] === undefined){
-        // return if issue does not exist
-        issueDIalog();
-        return;
-    }
-
-    $("#issue-title").text(issues[issueid].title);
-    $("#issue-state").text(states[issues[issueid].state]);
-    $("#issue-author").text(issues[issueid].display);
-    $("#issue-time").text(moment(issues[issueid].time).fromNow());
-    $("#issue-description").text(issues[issueid].text);
-
-    $("#issue-project").text(projects[issues[issueid].project].name);
-    $("#issue-pro-status").text(states[issues[issueid].state]);
-    $("#issue-pro-platform").text(projects[issues[issueid].project].platform);
-    $("#issue-pro-severity").text(severity[issues[issueid].severity]);
-}
+/*global firebase:true states:true severity:true issues:true userDialog Materialize */
+/*eslint no-undef: "error"*/
 
 function issueDialog(view = "") {
     $(".issue-dialog").hide();
@@ -52,6 +27,41 @@ function issueUI(loading = false, error = false, e){
     }
 }
 
+function openIssue(element){
+    issueDialog("details");
+
+    var id = $(element).attr("id");
+    if(typeof id === "undefined"){
+        return;
+    } else {
+        id = id.replace("issue-", "");
+    }
+
+    // validate ID is a string and clean it
+    if(typeof id === "string"){
+        var issueid = id;
+    } else {
+        return;
+    }
+
+    if(typeof issues[issueid] === "undefined"){
+        // return if issue does not exist
+        issueDialog();
+        return;
+    }
+
+    $("#issue-title").text(issues[issueid]["title"]);
+    $("#issue-state").text(states[issues[issueid].state]);
+    $("#issue-author").text(issues[issueid].display);
+    $("#issue-time").text(moment(issues[issueid].time).fromNow());
+    $("#issue-description").text(issues[issueid].text);
+
+    $("#issue-project").text(projects[issues[issueid].project].name);
+    $("#issue-pro-status").text(states[issues[issueid].state]);
+    $("#issue-pro-platform").text(projects[issues[issueid].project].platform);
+    $("#issue-pro-severity").text(severity[issues[issueid].severity]);
+}
+
 function newIssue(){
     var user = firebase.auth().currentUser;
     issueDialog("new");
@@ -65,15 +75,15 @@ function newIssue(){
     if(user) {
         // submit issue
 
-        if(severity === undefined || project === undefined){
+        if(typeof severity === "undefined" || typeof project === "undefined"){
             issueUI(false, true, {"message": "Please select the affected project and issue severity."});
         } else if(title === "" || desc === ""){
             issueUI(false, true, {"message": "Please specify the title and description of your issue."});
         } else {
             var issue = {
-                "severity": severity,
-                "project": project,
-                "title": title,
+                severity,
+                project,
+                title,
                 "text": desc,
                 "uid": firebase.auth().currentUser.uid,
                 "display": firebase.auth().currentUser.displayName,
@@ -85,7 +95,17 @@ function newIssue(){
             var key = firebase.database().ref().child("bugs").push().key;
 
             firebase.database().ref("bugs/" + key).set(issue).then(() => {
-                openIssue(key);
+                issueDialog("details");
+                $("#issue-title").text(issue.title);
+                $("#issue-state").text(states[1]);
+                $("#issue-author").text(issue.display);
+                $("#issue-time").text(moment(issue.time).fromNow());
+                $("#issue-description").text(issue.text);
+
+                $("#issue-project").text(projects[issue.project].name);
+                $("#issue-pro-status").text(states[1]);
+                $("#issue-pro-platform").text(projects[issue.project].platform);
+                $("#issue-pro-severity").text(severity[issue.severity]);
             }, (e) => {
                 issueUI(false, true, e);
             });

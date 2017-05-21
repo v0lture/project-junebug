@@ -1,4 +1,4 @@
-/*global firebase:true states:true severity:true issues:true */
+/*global firebase:true states:true severity:true issues:true userDialog Materialize */
 /*eslint no-undef: "error"*/
 
 function userFromUID(uid, issueid = 0) {

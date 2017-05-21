@@ -1,16 +1,55 @@
 function openIssue(id){
     issueDialog("details");
 
-    $("#issue-title").text(issues[id].title);
-    $("#issue-state").text(states[issues[id].state]);
-    $("#issue-author").text(issues[id].display);
-    $("#issue-time").text(moment(issues[id].time).fromNow());
-    $("#issue-description").text(issues[id].text);
+    // validate ID is a string and clean it
+    if(typeof id === "string"){
+        issueid = id.match('/([A-Za-z0-9\-]+)/g');
+    } else {
+        return;
+    }
 
-    $("#issue-project").text(projects[issues[id].project].name);
-    $("#issue-pro-status").text(states[issues[id].state]);
-    $("#issue-pro-platform").text(projects[issues[id].project].platform);
-    $("#issue-pro-severity").text(severity[issues[id].severity]);
+    if(issues[issueid] === undefined){
+        // return if issue does not exist
+        issueDIalog();
+        return;
+    }
+
+    $("#issue-title").text(issues[issueid].title);
+    $("#issue-state").text(states[issues[issueid].state]);
+    $("#issue-author").text(issues[issueid].display);
+    $("#issue-time").text(moment(issues[issueid].time).fromNow());
+    $("#issue-description").text(issues[issueid].text);
+
+    $("#issue-project").text(projects[issues[issueid].project].name);
+    $("#issue-pro-status").text(states[issues[issueid].state]);
+    $("#issue-pro-platform").text(projects[issues[issueid].project].platform);
+    $("#issue-pro-severity").text(severity[issues[issueid].severity]);
+}
+
+function issueDialog(view = "") {
+    $(".issue-dialog").hide();
+    $(".new-issue-err").hide();
+    $(".new-issue-err-wrap").hide();
+    issueUI(false, false);
+
+    if(view === "details" || view === "new"){
+        $("#"+view+"-issue-view").show();
+    }
+}
+
+function issueUI(loading = false, error = false, e){
+    $("#new-issue-err").hide();
+    $("#new-issue-err-wrap").hide();
+    $("#new-issue-loading").hide();
+
+    if(error) {
+        $("#new-issue-err").show().text(e.message);
+        $("#new-issue-err-wrap").show();
+    }
+
+    if(loading) {
+        $("#new-issue-loading").show();
+    }
 }
 
 function newIssue(){
@@ -43,9 +82,6 @@ function newIssue(){
                 "time": firebase.database.ServerValue.TIMESTAMP
             };
 
-            console.log(issue);
-
-            
             var key = firebase.database().ref().child('bugs').push().key;
 
             firebase.database().ref('bugs/' + key).set(issue).then(() => {
@@ -59,32 +95,6 @@ function newIssue(){
         userDialog('login');
         Materialize.toast('You must be logged in to submit an issue.', 5000);
         issueUI(false, true, {"message": "You must be logged in to submit an issue."});
-    }
-}
-
-function issueDialog(view = "") {
-    $(".issue-dialog").hide();
-    $(".new-issue-err").hide();
-    $(".new-issue-err-wrap").hide();
-    issueUI(false, false);
-
-    if(view === "details" || view === "new"){
-        $("#"+view+"-issue-view").show();
-    }
-}
-
-function issueUI(loading = false, error = false, e){
-    $("#new-issue-err").hide();
-    $("#new-issue-err-wrap").hide();
-    $("#new-issue-loading").hide();
-
-    if(error) {
-        $("#new-issue-err").show().text(e.message);
-        $("#new-issue-err-wrap").show();
-    }
-
-    if(loading) {
-        $("#new-issue-loading").show();
     }
 }
 

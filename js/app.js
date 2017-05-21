@@ -58,6 +58,15 @@ projectsRef.on("child_added", function(snapshot) {
   projects[snapshot.key] = snapshot.val();
 });
 
+// get last key for previous page
+function getKeyFor(page){
+    if(issuekeys.length <= (page-1)*20) {
+        return issuekeys[issuekeys.length-1];
+    } else {
+        return issuekeys[(page-1)*20];
+    }
+}
+
 var bugsRef = firebase.database().ref("/bugs/");
 
 // delete any deleted bugs
@@ -133,13 +142,4 @@ function pagination(loc){
         getIssues();
     }
     
-}
-
-// get last key for previous page
-function getKeyFor(page){
-    if(issuekeys.length <= (page-1)*20) {
-        return issuekeys[issuekeys.length-1];
-    } else {
-        return issuekeys[(page-1)*20];
-    }
 }

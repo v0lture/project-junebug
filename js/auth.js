@@ -66,7 +66,7 @@ function updateProfile(){
         Materialize.toast("Profile updated successfully", 1500);
     }, (e) => {
         flushUI(false, true, e);
-    })
+    });
 }
 
 function flushUI(togglestate = false, toggleerror = false, e = false) {
@@ -114,7 +114,6 @@ function userDialog(view = ""){
 
 firebase.auth().onAuthStateChanged((user) => {
     if(user){
-        console.log(user);
         $("#auth-state").attr("onclick", "userDialog('user')").text("Hi "+user.email+".");
         $("#profile-email").val(user.email);
         $("#profile-display").val(user.displayName);

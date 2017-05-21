@@ -209,3 +209,33 @@ label {
     border-color: #673ab7;
     background: #673ab7;
 }
+
+.pagination li.active {
+    background: #673ab7;
+}
+
+.filtering-box {
+    background: #E0E0E0;
+    padding: 15px;
+    margin: 15px;
+    color: black;
+    position: fixed;
+    z-index: 10;
+    margin-left: -40px;
+}
+
+.filtering-box > .arrow {
+    height: 24px;
+    width: 24px;
+    background: #E0E0E0;
+    transform: rotate(45deg);
+    margin-left: -27px;
+}
+
+.filtering-box > .content {
+    margin-top: -24px;
+}
+
+.filtering-box > .content > p {
+    margin: 0;
+}

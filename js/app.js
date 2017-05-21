@@ -119,7 +119,7 @@ function pagination(loc){
     }
 
     // safety overwrite conflict
-    if(getKeyFor(page) === undefined && page > 1){
+    if(typeof getKeyFor(page) === "undefined" && page > 1){
         page--;
         $("#pagination-plus").hide();
         $("#pagination-plus-t").hide();

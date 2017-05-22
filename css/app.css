@@ -217,11 +217,9 @@ label {
 .filtering-box {
     background: #E0E0E0;
     padding: 15px;
-    margin: 15px;
+    margin: 30px 15px 15px 7.5px;
     color: black;
-    position: fixed;
-    z-index: 10;
-    margin-left: -40px;
+    display: none;
 }
 
 .filtering-box > .arrow {
@@ -229,11 +227,12 @@ label {
     width: 24px;
     background: #E0E0E0;
     transform: rotate(45deg);
-    margin-left: -27px;
+    margin-top: -27px;
+    margin-left: -10px;
 }
 
 .filtering-box > .content {
-    margin-top: -24px;
+    margin-top: 0px;
 }
 
 .filtering-box > .content > p {

@@ -212,13 +212,56 @@
                     </ul>
                 </div>
 
+                <!-- Filtering -->
+
+                <div class="filtering-box" id="filtering-box">
+                    <div class="arrow"></div>
+                    <a id="filterbox"></a>
+                    <div class="content">
+                        <p><i class="material-icons left accent-text-light">filter_list</i> Filter</p>
+                        <br />
+                        <div class="row">
+
+                            <div class="col s6">
+
+                                <div class="input-field col s12">
+                                    <select>
+                                        <option value="*" selected>Any project</option>
+                                        <option value="1">A</option>
+                                        <option value="2">B</option>
+                                        <option value="3">C</option>
+                                    </select>
+                                    <label>Affected Project</label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        
+                        <p>
+                            <input type="checkbox" class="filled-in" id="filter-active" />
+                            <label for="filter-active">Apply filter to results</label>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="filtering-box" id="filtering-active-box">
+                    <div class="arrow"></div>
+
+                    <div class="content">
+                        <p><i class="material-icons left accent-text-light">youtube_searched_for</i> Filtering is active</p>
+                    </div>
+                </div>
+
+
+                <!-- issues -->
                 <div class="issues-array">
 
                 </div>
 
                 <div class="issues-pagination">
                     <ul class="pagination">
-                        <li class="waves-effect"><a href="#!"><i class="material-icons white-text">filter_list</i></a></li>
+                        <li class="waves-effect"><a href="#filterbox"><i class="material-icons white-text">filter_list</i></a></li>
 
                         <li id="pagination-minus-t" class="waves-effect" onclick="pagination('-')"><a href="#!"><i class="material-icons white-text">chevron_left</i></a></li>
 
@@ -226,6 +269,14 @@
 
                         <li id="pagination-plus-t" onclick="pagination('+')" class="waves-effect"><a href="#!"><i class="material-icons white-text">chevron_right</i></a></li>
                     </ul>
+                </div>
+
+                <div class="filtering-box" id="filtering-active-box">
+                    <div class="arrow"></div>
+
+                    <div class="content">
+                        <p><i class="material-icons left accent-text-light">youtube_searched_for</i> Filtering is active</p>
+                    </div>
                 </div>
 
                 <div class="fixed-action-btn">
@@ -343,6 +394,13 @@
         </div>
 
         <!-- Firebase -->
+        <script>
+
+            $(document).ready(() => {
+                $('select').material_select();
+            });
+
+        </script>
     </body>
 
 </html>

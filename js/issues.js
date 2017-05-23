@@ -62,6 +62,8 @@ function openIssue(element){
     $("#issue-pro-status").text(states[issues[issueid].state]);
     $("#issue-pro-platform").text(projects[issues[issueid].project].platform);
     $("#issue-pro-severity").text(severity[issues[issueid].severity]);
+
+    loadComments(issueid);
 }
 
 function newIssue(){
@@ -118,6 +120,61 @@ function newIssue(){
         Materialize.toast("You must be logged in to submit an issue.", 5000);
         issueUI(false, true, {"message": "You must be logged in to submit an issue."});
     }
+}
+
+/* Comments */
+function loadComments(bugkey) {
+    $("#issue-comments-loading").show();
+    $("#issue-comments-empty").hide();
+    $("#issue-comments").html("");
+
+    var found = false;
+
+    var bcRef = firebase.database().ref("/responses/"+bugkey).orderByKey().on("child_added", (s) => {
+        found = true;
+        $("#issue-comments-loading").hide();
+        $("#issue-comments-empty").hide();
+        $("#issue-comments").append("<div id=\"issue-comment-"+s.key+"\"><div class=\"issue issue-white\"><p>"+s.child("text").val()+"</p></div><div class=\"issue issue-lwhite\"><a href=\"#issue-comments-new-a\" class=\"btn-flat right waves-effect waves-light accent-text-light\">Reply</a><p><i class=\"material-icons left accent-text-light\">comment</i> By <b>"+s.child("display").val()+"</b> at <b>"+moment(s.child("time").val()).fromNow()+"</b></p></div></div><br />");
+
+    });
+    setTimeout(() => {
+        if(!found){
+            $("#issue-comments-loading").hide();
+            $("#issue-comments-empty").show();
+        }
+    }, 15000);
+
+    $("#issue-comments-new-btn").attr("onclick", "newComment('"+bugkey+"')");
+}
+
+function newComment(bugkey) {
+    var text = $("#issue-comments-new-field").val();
+    $("#issue-comments-new-err-wrap").hide();
+
+    // validate if empty
+    if(typeof text === "undefined" || text === ""){
+        $("#issue-comments-new-err-wrap").show();
+        $("#issue-comments-new-err").text("You cannot submit an empty comment");
+        return;
+    }
+
+    var comment = {
+        text,
+        "uid": firebase.auth().currentUser.uid,
+        "display": firebase.auth().currentUser.displayName,
+        "time": firebase.database.ServerValue.TIMESTAMP
+    }   
+
+    
+    var key = firebase.database().ref().child("responses/"+bugkey).push().key;
+
+    firebase.database().ref("responses/" + bugkey + "/" + key).set(comment).then(() => {
+        Materialize.toast("Comment submitted successfully", 2000);
+        $("#issue-comments-new-field").val("");
+    }, (e) => {
+        $("#issue-comments-new-err-wrap").show();
+        $("#issue-comments-new-err").text("Failed to submit comment &mdash; "+e.message);
+    });
 }
 
 $(document).ready(() => {

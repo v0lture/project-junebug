@@ -24,7 +24,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    </head>
+   </head>
 
     <body>
 
@@ -203,6 +203,7 @@
                 <div class="issues-pagination">
                     <ul class="pagination">
                         <li class="waves-effect"><a href="#!"><i class="material-icons white-text">filter_list</i></a></li>
+                        <li class="waves-effect"><a href="#!" onclick="issueDialog('new')"><i class="material-icons white-text">add</i></a></li>
 
                         <li id="pagination-minus" class="waves-effect" onclick="pagination('-')"><a href="#!"><i class="material-icons white-text">chevron_left</i></a></li>
 
@@ -253,7 +254,6 @@
                     </div>
                 </div>
 
-
                 <!-- issues -->
                 <div class="issues-array">
 
@@ -262,6 +262,7 @@
                 <div class="issues-pagination">
                     <ul class="pagination">
                         <li class="waves-effect"><a href="#filterbox"><i class="material-icons white-text">filter_list</i></a></li>
+                        <li class="waves-effect"><a href="#!" onclick="issueDialog('new')"><i class="material-icons white-text">add</i></a></li>
 
                         <li id="pagination-minus-t" class="waves-effect" onclick="pagination('-')"><a href="#!"><i class="material-icons white-text">chevron_left</i></a></li>
 
@@ -279,11 +280,6 @@
                     </div>
                 </div>
 
-                <div class="fixed-action-btn">
-                    <a class="btn-floating btn-large accent waves-effect waves-light" onclick="issueDialog('new')">
-                        <i class="large material-icons">add</i>
-                    </a>
-                </div>
             </div>
 
             <!-- Bug view -->
@@ -314,6 +310,43 @@
                             </div>
 
                         </div>
+                    </div>
+
+                    <br />
+                    <div class="center-align" style="opacity: 0.75" id="issue-comments-loading">
+                        <p>Loading comments</p>
+                        <center>
+                            <div class="progress grey" style="width: 200px;">
+                                <div class="indeterminate accent"></div>
+                            </div>
+                        </center>
+                    </div>
+
+                    <br />
+                    <div class="center-align issue-issue-white" id="issue-comments-empty">
+                        <p>Junebug couldn't find any comments for this issue. <br />You can add one below.</p>
+                    </div>
+
+                    <br />
+                    <!-- comments -->
+                    <div id="issue-comments">
+                    </div>
+
+                    <br />
+                    <!-- new comment -->
+                    <a id="issue-comments-new-a"></a>
+                    <div class="issue issue-white" id="issue-comments-new">
+                        <div class="input-field">
+
+                            <input id="issue-comments-new-field" type="text"></input>
+                            <label for="issue-comments-new-field">Comment</label>
+
+                        </div>
+                        <p style="display: none;" id="issue-comments-new-err-wrap"><i class="material-icons left accent-text">warning</i> <span id="issue-comments-new-err">Error</span></p>
+                    </div>
+                    
+                    <div class="issue issue-lwhite">
+                        <a class="btn-flat waves-effect waves-light accent-text-light" id="issue-comments-new-btn" onclick="newComment('text')">Submit comment</a>
                     </div>
                 </div>
 
@@ -392,7 +425,7 @@
             </div>
 
         </div>
-
+        
         <!-- Firebase -->
         <script>
 

@@ -24,6 +24,8 @@ function userDialog(view = ""){
     $(".login-box > .loading").hide();
     flushUI();
 
+    Materialize.updateTextFields();
+
     if(view === "login" || view === "register" || view === "user" || view === "forgotpass"){
         $("#"+view+"-box").show();
     }

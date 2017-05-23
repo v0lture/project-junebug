@@ -78,6 +78,7 @@ function newComment(bugkey) {
     firebase.database().ref("responses/" + bugkey + "/" + key).set(comment).then(() => {
         Materialize.toast("Comment submitted successfully", 2000);
         $("#issue-comments-new-field").val("");
+        Materialize.updateTextFields();
     }, (e) => {
         $("#issue-comments-new-err-wrap").show();
         $("#issue-comments-new-err").text("Failed to submit comment &mdash; "+e.message);
@@ -167,6 +168,15 @@ function newIssue(){
                 $("#issue-pro-status").text(states[1]);
                 $("#issue-pro-platform").text(projects[issue.project].platform);
                 $("#issue-pro-severity").text(severity[issue.severity]);
+
+                // clear
+                $("#new-issue-title").val("");
+                $("#new-issue-desc").val("");
+                $("input:radio[name='new-issue-project']").prop('checked', false);
+                $("input:radio[name='new-issue-severity']").prop('checked', false);
+                Materialize.updateTextFields();
+
+                loadComments(key);
             }, (e) => {
                 issueUI(false, true, e);
             });

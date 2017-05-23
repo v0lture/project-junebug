@@ -172,8 +172,8 @@ function newIssue(){
                 // clear
                 $("#new-issue-title").val("");
                 $("#new-issue-desc").val("");
-                $("input:radio[name='new-issue-project']").prop('checked', false);
-                $("input:radio[name='new-issue-severity']").prop('checked', false);
+                $("input:radio[name='new-issue-project']").prop("checked", false);
+                $("input:radio[name='new-issue-severity']").prop("checked", false);
                 Materialize.updateTextFields();
 
                 loadComments(key);

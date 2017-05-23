@@ -28,6 +28,8 @@ function userDialog(view = ""){
 
     if(view === "login" || view === "register" || view === "user" || view === "forgotpass"){
         $("#"+view+"-box").show();
+    } else {
+        return;
     }
 }
 

@@ -59,7 +59,7 @@
                     <div class="content">
                         <p><i class="material-icons left accent-text-light">account_box</i> Login</p>
                         <br />
-                        <form method="#">
+                        <form id="login-form">
 
                             <div class="input-field">
                                 <input type="text" id="login-email"></input>
@@ -71,9 +71,9 @@
                                 <label for="login-password">Password</label>
                             </div>
 
-                             <p id="login-err-wrap" class="login-err-wrap"><i class="material-icons left accent-text-light">warning</i> <span id="login-err"></span></p>
+                            <p id="login-err-wrap" class="login-err-wrap"><i class="material-icons left accent-text-light">warning</i> <span id="login-err"></span></p>
                             <br />
-                            <button type="submit" onclick="login();" class="btn waves-effect waves-light accent white-text">Login</button>
+                            <a onclick="login();" class="btn waves-effect waves-light accent white-text">Login</a>
                             <a type="button" onclick="userDialog('register');" class="btn-flat waves-effect waves-light accent-text">Register</a>
                             <a type="button" onclick="userDialog('forgotpass');" class="btn-flat waves-effect waves-light accent-text">Forgot?</a>
 
@@ -96,7 +96,7 @@
                     <div class="content">
                         <p><i class="material-icons left accent-text-light">settings_backup_restore</i> Password Recovery</p>
                         <br />
-                        <form method="#">
+                        <form>
 
                             <p>This utility will send a password reset link to your account (if there is one).</p>
 
@@ -107,7 +107,7 @@
 
                             <p id="forgotpass-err-wrap" class="login-err-wrap"><i class="material-icons left accent-text-light">warning</i> <span id="forgotpass-err"></span></p>
                             <br />
-                            <button type="submit" onclick="recoverPass();" class="btn waves-effect waves-light accent white-text">Recover</button>
+                            <a onclick="recoverPass();" class="btn waves-effect waves-light accent white-text">Recover</a>
                             <a onclick="userDialog('login');" class="btn-flat waves-effect waves-light accent-text">Cancel</a>
 
                         </form>
@@ -149,7 +149,7 @@
                             <p id="reg-err-wrap" class="login-err-wrap"><i class="material-icons left accent-text-light">warning</i> <span id="reg-err"></span></p>
                             <br />
 
-                            <button type="submit"  onclick="register();" class="btn waves-effect waves-light accent white-text">Register</button>
+                            <a onclick="register();" class="btn waves-effect waves-light accent white-text">Register</a>
                             <a onclick="userDialog('login');" class="btn-flat waves-effect waves-light accent-text">Login</a>
 
                         </form>

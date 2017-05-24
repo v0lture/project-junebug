@@ -111,10 +111,7 @@ function pagination(pos = "") {
         if(page === 1){
             $("#jumpback-box").hide();
         }
-    } else {
-        console.warn("Trying to navigate around pages but not ready!");
-        Materialize.toast("Issues are still loading, please wait.", 3000);
-    }
+    } 
 }
 
 $(document).ready(() => {

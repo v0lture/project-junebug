@@ -8,26 +8,6 @@ var issuekeys = [];
 var page = 1;
 var keyi = 0;
 
-// Load all issues at launch
-function prefetchIssues(){
-    $("#issues-v2-loading").show();
-    $("#issues-v2-loading > center > p").text("Loading issues...");
-    bugsRef.orderByKey().on("child_added", (s) => {
-
-        $("#issues-v2-loading > center > p").text("Loaded "+keyi+" issues...");
-
-        if(keyi === 20){
-            $("#issues-v2-loading").hide();
-            $("#issues-v2-loading > center > p").hide(); 
-            showIssues(1, true);
-        }    
-
-        issues[s.key] = s.val();
-        issuekeys[keyi] = s.key;
-        keyi++;
-    });
-}
-
 // load 20 issues
 function showIssues(page, isloading = false) {
     var ct = issuekeys.length;
@@ -67,10 +47,30 @@ function showIssues(page, isloading = false) {
     return true;
 }
 
+// Load all issues at launch
+function prefetchIssues(){
+    $("#issues-v2-loading").show();
+    $("#issues-v2-loading > center > p").text("Loading issues...");
+    bugsRef.orderByKey().on("child_added", (s) => {
+
+        $("#issues-v2-loading > center > p").text("Loaded "+keyi+" issues...");
+
+        if(keyi === 20){
+            $("#issues-v2-loading").hide();
+            $("#issues-v2-loading > center > p").hide(); 
+            showIssues(1, true);
+        }    
+
+        issues[s.key] = s.val();
+        issuekeys[keyi] = s.key;
+        keyi++;
+    });
+}
+
 // work with UI
 function pagination(pos = "") {
     if(pos === ""){
-
+        showIssues(1);
     } else if(pos === "-"){
         if(showIssues(page-1)) {
             page--;

@@ -40,8 +40,8 @@
 
                 <div class="accountbox">
                     <p class="icon-header"><i class="material-icons left accent-text">account_box</i> Account</p>
-                    <div class="we waves-effect waves-light">
-                        <p onclick="userDialog('login');" class="ih-text" id="auth-state">Not Logged In</p>
+                    <div class="we waves-effect waves-light" id="auth-state-wrap" onclick="userDialog('login');">
+                        <p class="ih-text" id="auth-state">Not Logged In</p>
                     </div>
                 </div>
 
@@ -58,6 +58,7 @@
 
                     <div class="content">
                         <p><i class="material-icons left accent-text-light">account_box</i> Login</p>
+                        <a style="margin-top: -25px;" class="right tinyfab waves-effect waves-light transparent" onclick="userDialog()"><i class="material-icons accent-text">close</i></a>
                         <br />
                         <form id="login-form">
 
@@ -95,6 +96,7 @@
 
                     <div class="content">
                         <p><i class="material-icons left accent-text-light">settings_backup_restore</i> Password Recovery</p>
+                        <a style="margin-top: -25px;" class="right tinyfab waves-effect waves-light transparent" onclick="userDialog()"><i class="material-icons accent-text">close</i></a>
                         <br />
                         <form>
 
@@ -128,6 +130,7 @@
 
                     <div class="content">
                         <p><i class="material-icons left accent-text-light">person_add</i> Register</p>
+                        <a style="margin-top: -25px;" class="right tinyfab waves-effect waves-light transparent" onclick="userDialog()"><i class="material-icons accent-text">close</i></a>
                         <br />
                         <form>
 
@@ -169,7 +172,7 @@
 
                     <div class="content">
                         <p><i class="material-icons left accent-text-light">info</i> Profile</p>
-                        <p style="margin-top: -25px;" class="right" onclick="userDialog()"><i class="material-icons accent-text-light">close</i></p>
+                        <a style="margin-top: -25px;" class="right tinyfab waves-effect waves-light transparent" onclick="userDialog()"><i class="material-icons accent-text">close</i></a>
                         <br />
                         <form>
 

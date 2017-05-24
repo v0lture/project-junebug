@@ -62,11 +62,11 @@ body {
 }
 
 .statebox {
-    padding: 15px;
+    padding: 5px;
     color: white;
 }
 
-.projectbox > .we {
+.we {
     width: 100%;
 }
 
@@ -237,4 +237,9 @@ label {
 
 .filtering-box > .content > p {
     margin: 0;
+}
+
+.tinyfab {
+    border-radius: 5px;
+    padding: 5px;
 }

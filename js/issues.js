@@ -41,7 +41,7 @@ function loadComments(bugkey) {
         found = true;
         $("#issue-comments-loading").hide();
         $("#issue-comments-empty").hide();
-        $("#issue-comments").append("<div id=\"issue-comment-"+s.key+"\"><div class=\"issue issue-white\"><p>"+s.child("text").val()+"</p></div><div class=\"issue issue-lwhite\"><a href=\"#issue-comments-new-a\" class=\"btn-flat right waves-effect waves-light accent-text-light\">Reply</a><p><i class=\"material-icons left accent-text-light\">comment</i> By <b>"+s.child("display").val()+"</b> at <b>"+moment(s.child("time").val()).fromNow()+"</b></p></div></div><br />");
+        $("#issue-comments").append("<div id=\"issue-comment-"+s.key+"\"><div class=\"issue issue-white\"><p>"+s.child("text").val()+"</p></div><div class=\"issue issue-lwhite\"><p><i class=\"material-icons left accent-text-light\">comment</i> By <b>"+s.child("display").val()+"</b> at <b>"+moment(s.child("time").val()).fromNow()+"</b></p></div></div><br />");
 
     });
     setTimeout(() => {
@@ -129,7 +129,7 @@ function newIssue(){
     issueDialog("new");
     issueUI(false, false);
 
-    var severity = $("input:radio[name='new-issue-severity']:checked").val();
+    var iseverity = $("input:radio[name='new-issue-severity']:checked").val();
     var project = $("input:radio[name='new-issue-project']:checked").val();
     var title = $("#new-issue-title").val();
     var desc = $("#new-issue-desc").val();
@@ -143,7 +143,7 @@ function newIssue(){
             issueUI(false, true, {"message": "Please specify the title and description of your issue."});
         } else {
             var issue = {
-                severity,
+                "severity": iseverity,
                 project,
                 title,
                 "text": desc,

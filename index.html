@@ -219,6 +219,18 @@
 
                 <p class="issues-length right">Showing 0-20 issues of 49 total</p><br />
 
+                <!-- On new bug submission, jump back -->
+                <div class="jumpback-box" id="jumpback-box">
+                    <div class="arrow"></div>
+
+                    <div class="content">
+                        <p><i class="material-icons left accent-text-light">dashboard</i> <b>Show new issues</b></p>
+                        <a style="margin-top: -25px;" class="right tinyfab waves-effect waves-light transparent" onclick="$('#jumpback-box').hide();"><i class="material-icons accent-text">close</i></a>
+                        <br />
+                        <p>New issues were added. Go back to page one with the arrow or <a href="#top" class="accent-text" onclick="showIssues(1);">click here</a> to return.</p>
+                    </div>
+                </div>
+
                 <!-- Filtering -->
 
                 <div class="filtering-box" id="filtering-box">

@@ -253,3 +253,29 @@ label {
     margin-right: 15px;
     margin-bottom: 40px;
 }
+
+/* jumpback box */
+.jumpback-box {
+    background: #E0E0E0;
+    padding: 15px;
+    margin: -10px 15px 15px 7.5px;
+    color: black;
+    display: none;
+}
+
+.jumpback-box > .arrow {
+    height: 24px;
+    width: 24px;
+    background: #E0E0E0;
+    transform: rotate(45deg);
+    margin-top: -27px;
+    margin-left: 100px;
+}
+
+.jumpback-box > .content {
+    margin-top: 0px;
+}
+
+.jumpback-box > .content > p {
+    margin: 0;
+}

@@ -7,6 +7,7 @@ var issues = {};
 var issuekeys = [];
 var page = 1;
 var keyi = 0;
+var allowautorefresh = false;
 
 // load 20 issues
 function showIssues(page, isloading = false) {
@@ -18,10 +19,16 @@ function showIssues(page, isloading = false) {
         return false;
     }
 
+    // for first 20 keys loaded, and then once more after timeout
     if(isloading){
         $(".issues-length").text("Showing "+(page*20)+" issues but still loading");
     } else {
-        $(".issues-length").text("Showing "+((page*20)-20)+"-"+(page*20)+" of "+(ct-1)+" total");
+        // prevent x-y of z total where y > z though that isn't possible
+        if(page*20 > ct-1){
+            $(".issues-length").text("Showing "+((page*20)-20)+"-"+(ct-1)+" of "+(ct-1)+" total");
+        } else {
+            $(".issues-length").text("Showing "+((page*20)-20)+"-"+(page*20)+" of "+(ct-1)+" total");
+        }
     }
         
 
@@ -62,31 +69,51 @@ function prefetchIssues(){
         issues[s.key] = s.val();
         issuekeys[keyi] = s.key;
         keyi++;
+
+        // show jumpback issue dialog
+        if(page > 1){
+            $("#jumpback-box").show();
+        }
+
+        // refresh current page on new bug (after 1.5s timeout)
+        if(allowautorefresh){
+            showIssues(page);
+        }
     });
 }
 
 // Load timeout
-setTimeout(() => {
-
-    
+setTimeout(() => {    
     $("#issues-v2-loading").hide();
     $("#issues-v2-loading > center > p").hide(); 
     showIssues(1);
-
-}, 3000);
+    allowautorefresh = true;
+}, 1500);
 
 // work with UI
 function pagination(pos = "") {
-    if(pos === ""){
-        showIssues(1);
-    } else if(pos === "-"){
-        if(showIssues(page-1)) {
-            page--;
+    if(allowautorefresh){
+        if(pos === ""){
+            showIssues(1);
+        } else if(pos === "-"){
+            if(showIssues(page-1)) {
+                page--;
+            }
+        } else if(pos === "+"){
+            if(showIssues(page+1)){
+                page++;
+            }
+        } else {
+            showIssues(page);
+        }
+
+        // hide jumpback issue dialog
+        if(page === 1){
+            $("#jumpback-box").hide();
         }
     } else {
-        if(showIssues(page+1)){
-            page++;
-        }
+        console.warn("Trying to navigate around pages but not ready!");
+        Materialize.toast("Issues are still loading, please wait.", 3000);
     }
 }
 

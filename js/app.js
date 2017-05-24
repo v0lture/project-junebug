@@ -95,7 +95,9 @@ function getIssues(paginate = true){
         issuekeys[keyi] = snapshot.key;
         keyi++;
 
-        $(".issues-array").append("<div id=\"issue-"+snapshot.key+"\" onclick='openIssue(this)' class=\"issue\"><p class=\"i-header\">"+snapshot.child("title").val()+"</p><p class=\"i-desc truncate\">"+snapshot.child("text").val()+"</p><div class=\"row\"><div class=\"col s12 m6 l6\"><p class=\"i-icon\"><i class=\"material-icons left accent-text\">announcement</i> "+states[snapshot.child("state").val()]+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">content_paste</i> "+projects[snapshot.child("project").val()].name+"</p></div><div class=\"col s12 m6 l6\"><p class=\"i-icon truncate\"><i class=\"material-icons left accent-text\">account_box</i> "+snapshot.child("display").val()+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">history</i> "+moment(snapshot.child("time").val()).fromNow()+"</p></div></div></div>");
+        var issuearray = $(".issues-array").html();
+
+        $(".issues-array").html("<div id=\"issue-"+snapshot.key+"\" onclick='openIssue(this)' class=\"issue\"><p class=\"i-header\">"+snapshot.child("title").val()+"</p><p class=\"i-desc truncate\">"+snapshot.child("text").val()+"</p><div class=\"row\"><div class=\"col s12 m6 l6\"><p class=\"i-icon\"><i class=\"material-icons left accent-text\">announcement</i> "+states[snapshot.child("state").val()]+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">content_paste</i> "+projects[snapshot.child("project").val()].name+"</p></div><div class=\"col s12 m6 l6\"><p class=\"i-icon truncate\"><i class=\"material-icons left accent-text\">account_box</i> "+snapshot.child("display").val()+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">history</i> "+moment(snapshot.child("time").val()).fromNow()+"</p></div></div></div>" + issuearray);
 
     });
 }

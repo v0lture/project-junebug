@@ -56,8 +56,6 @@ function prefetchIssues(){
         $("#issues-v2-loading > center > p").text("Loaded "+keyi+" issues...");
 
         if(keyi === 20){
-            $("#issues-v2-loading").hide();
-            $("#issues-v2-loading > center > p").hide(); 
             showIssues(1, true);
         }    
 
@@ -66,6 +64,16 @@ function prefetchIssues(){
         keyi++;
     });
 }
+
+// Load timeout
+setTimeout(() => {
+
+    
+    $("#issues-v2-loading").hide();
+    $("#issues-v2-loading > center > p").hide(); 
+    showIssues(1);
+
+}, 3000);
 
 // work with UI
 function pagination(pos = "") {

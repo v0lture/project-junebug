@@ -191,5 +191,5 @@ function newIssue(){
 
 $(document).ready(() => {
     issueDialog();
-    pagination("-");
+    pagination("");
 });

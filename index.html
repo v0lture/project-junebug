@@ -16,6 +16,7 @@
         <script src="js/materialize.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
         <script src="js/app.js"></script>
+        <script src="js/page.js"></script>
         <script src="js/issues.js"></script>
         <script src="js/users.js"></script>
         <script src="js/auth.js"></script>
@@ -216,6 +217,8 @@
                     </ul>
                 </div>
 
+                <p class="issues-length">Showing 0-20 issues of 49 total</p>
+
                 <!-- Filtering -->
 
                 <div class="filtering-box" id="filtering-box">
@@ -255,6 +258,15 @@
                     <div class="content">
                         <p><i class="material-icons left accent-text-light">youtube_searched_for</i> Filtering is active</p>
                     </div>
+                </div>
+
+                <div id="issues-v2-loading" class="white-text">
+                    <center>
+                        <p>Loading issues</p>
+                        <div class="progress grey" style="width: 200px;">
+                            <div class="indeterminate accent"></div>
+                        </div>
+                    </center>
                 </div>
 
                 <!-- issues -->

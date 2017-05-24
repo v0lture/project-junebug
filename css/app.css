@@ -243,3 +243,11 @@ label {
     border-radius: 5px;
     padding: 5px;
 }
+
+.issues-length {
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    color: white;
+    padding-left: 10px;
+}

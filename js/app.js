@@ -41,14 +41,9 @@ var severity = {
     6: "Critical"
 };
 
-var page = 1;
-var keyi = 1;
-
 var startAt;
 
 var projects = {};
-var issues = {};
-var issuekeys = {};
 
 var projectsRef = firebase.database().ref("/projects/");
 projectsRef.on("child_added", function(snapshot) {
@@ -59,15 +54,6 @@ projectsRef.on("child_added", function(snapshot) {
   projects[snapshot.key] = snapshot.val();
 });
 
-// get last key for previous page
-function getKeyFor(page){
-    if(issuekeys.length <= (page-1)*20) {
-        return issuekeys[issuekeys.length-1];
-    } else {
-        return issuekeys[(page-1)*20];
-    }
-}
-
 var bugsRef = firebase.database().ref("/bugs/");
 
 // delete any deleted bugs
@@ -76,73 +62,3 @@ bugsRef.orderByKey().on("child_removed", (snapshot) => {
     
     $("#issue-"+snapshot.key).remove();
 });
-
-// read last 20 bugs
-function getIssues(paginate = true){
-    $(".issues-array").html("");
-
-    keyi = ((page-1) * 20)+1;
-
-    if(paginate){
-        startAt = getKeyFor(page);
-    } else {
-        startAt = "";
-    }
-
-    bugsRef.orderByKey().limitToFirst(20).startAt(startAt).on("child_added", (snapshot) => {
-        issues[snapshot.key] = snapshot.val();
-
-        issuekeys[keyi] = snapshot.key;
-        keyi++;
-
-        var issuearray = $(".issues-array").html();
-
-        $(".issues-array").html("<div id=\"issue-"+snapshot.key+"\" onclick='openIssue(this)' class=\"issue\"><p class=\"i-header\">"+snapshot.child("title").val()+"</p><p class=\"i-desc truncate\">"+snapshot.child("text").val()+"</p><div class=\"row\"><div class=\"col s12 m6 l6\"><p class=\"i-icon\"><i class=\"material-icons left accent-text\">announcement</i> "+states[snapshot.child("state").val()]+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">content_paste</i> "+projects[snapshot.child("project").val()].name+"</p></div><div class=\"col s12 m6 l6\"><p class=\"i-icon truncate\"><i class=\"material-icons left accent-text\">account_box</i> "+snapshot.child("display").val()+"</p><p class=\"i-icon\"><i class=\"material-icons left accent-text\">history</i> "+moment(snapshot.child("time").val()).fromNow()+"</p></div></div></div>" + issuearray);
-
-    });
-}
-
-// 
-
-// pagination UI
-function pagination(loc){
-
-    if(loc === "+") {
-        // add page
-        page++;
-        $("#pagination-minus").show();
-        $("#pagination-minus-t").show();
-    } else if(loc === "-") {
-        page--;
-
-        if(page < 2){
-            page = 1;
-        }
-    }
-
-    // safety overwrite conflict
-    if(typeof getKeyFor(page) === "undefined" && page > 1){
-        page--;
-        $("#pagination-plus").hide();
-        $("#pagination-plus-t").hide();
-    }
-
-    if(typeof getKeyFor(page + 1) === "undefined"){
-        $("#pagination-plus").hide();
-        $("#pagination-plus-t").hide();
-    }
-
-    if(page === 1){
-        $("#pagination-minus").hide();
-        $("#pagination-minus-t").hide();
-        $("#pagination-plus").show();
-        $("#pagination-plus-t").show();
-        getIssues(false);
-    } else {
-        getIssues();
-    }
-
-    $("#pagination-pg").html("<a>"+page+"</a>");
-    $("#pagination-pg-t").html("<a>"+page+"</a>");
-    
-}

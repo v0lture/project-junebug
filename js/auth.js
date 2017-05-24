@@ -117,7 +117,7 @@ function updateProfile(){
 
 firebase.auth().onAuthStateChanged((user) => {
     if(user){
-        $("#auth-state-wrap").attr("onclick", "userDialog('user')")
+        $("#auth-state-wrap").attr("onclick", "userDialog('user')");
         $("#auth-state").html("Hi "+user.displayName+"<br />("+user.email+")");
         $("#profile-email").val(user.email);
         $("#profile-display").val(user.displayName);
@@ -132,12 +132,8 @@ firebase.auth().onAuthStateChanged((user) => {
 
         Materialize.updateTextFields();
     } else {
-        $("#auth-state-wrap").attr("onclick", "userDialog('login')")
+        $("#auth-state-wrap").attr("onclick", "userDialog('login')");
         $("#auth-state").text("Not logged in");
         $("#new-issue-user").html("Not logged in. <a href='#' onclick='userDialog(\"login\")' class='accent-text'>Log in</a>");
     }
 });
-
-$("#login-form").on("submit", (e) => {
-    e.preventDefault();
-})

@@ -95,6 +95,7 @@ function pagination(pos = "") {
     if(allowautorefresh){
         if(pos === ""){
             showIssues(1);
+            page = 1;
         } else if(pos === "-"){
             if(showIssues(page-1)) {
                 page--;

@@ -27,6 +27,12 @@ function issueDialog(view = "") {
     if(view === "details" || view === "new"){
         $("#"+view+"-issue-view").show();
     }
+
+    if(view === "new"){
+        $("#pagination-new-issue").addClass("active");
+    } else {
+        $("#pagination-new-issue").removeClass("active");
+    }
 }
 
 /* Comments */
@@ -137,7 +143,7 @@ function newIssue(){
     if(user) {
         // submit issue
 
-        if(typeof severity === "undefined" || typeof project === "undefined"){
+        if(typeof iseverity === "undefined" || typeof project === "undefined"){
             issueUI(false, true, {"message": "Please select the affected project and issue severity."});
         } else if(title === "" || desc === ""){
             issueUI(false, true, {"message": "Please specify the title and description of your issue."});

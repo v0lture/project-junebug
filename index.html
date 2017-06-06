@@ -204,10 +204,11 @@
 
                 </div>
 
+                <!-- Pagination -->
                 <div class="issues-pagination">
                     <ul class="pagination">
-                        <li class="waves-effect"><a href="#!"><i class="material-icons white-text">filter_list</i></a></li>
-                        <li class="waves-effect"><a href="#!" onclick="issueDialog('new')"><i class="material-icons white-text">add</i></a></li>
+                        <li id="pagination-filtering" class="waves-effect"><a href="#!"><i class="material-icons white-text">filter_list</i></a></li>
+                        <li id="pagination-new-issue" class="waves-effect"><a href="#!" onclick="issueDialog('new')"><i class="material-icons white-text">add</i></a></li>
 
                         <li id="pagination-minus" class="waves-effect" onclick="pagination('-')"><a href="#!"><i class="material-icons white-text">chevron_left</i></a></li>
 
@@ -227,7 +228,7 @@
                         <p><i class="material-icons left accent-text-light">dashboard</i> <b>Show new issues</b></p>
                         <a style="margin-top: -25px;" class="right tinyfab waves-effect waves-light transparent" onclick="$('#jumpback-box').hide();"><i class="material-icons accent-text">close</i></a>
                         <br />
-                        <p>New issues were added. Go back to page one with the arrow or <a href="#top" class="accent-text" onclick="showIssues(1);">click here</a> to return.</p>
+                        <p>New issues were added. Go back to page one with the arrow or <a href="#top" class="accent-text" onclick="pagination('');">click here</a> to return.</p>
                     </div>
                 </div>
 
@@ -288,8 +289,8 @@
 
                 <div class="issues-pagination">
                     <ul class="pagination">
-                        <li class="waves-effect"><a href="#filterbox"><i class="material-icons white-text">filter_list</i></a></li>
-                        <li class="waves-effect"><a href="#!" onclick="issueDialog('new')"><i class="material-icons white-text">add</i></a></li>
+                        <li id="pagination-filtering-t" class="waves-effect"><a href="#filterbox"><i class="material-icons white-text">filter_list</i></a></li>
+                        <li id="pagination-new-issue-t" class="waves-effect"><a href="#!" onclick="issueDialog('new')"><i class="material-icons white-text">add</i></a></li>
 
                         <li id="pagination-minus-t" class="waves-effect" onclick="pagination('-')"><a href="#!"><i class="material-icons white-text">chevron_left</i></a></li>
 
